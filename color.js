@@ -1,5 +1,5 @@
 export const theme = {
     bg: "black",
-    grey: "#3A3D40",
+    grey: "gray",
     toDoBg: "#1A1C20",
   };
