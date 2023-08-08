@@ -203,13 +203,13 @@ export default function App() {
               )}
               <View style={styles.buttons}>
                <TouchableOpacity onPress={() => startEditing(key)}>
-                  <Fontisto name="eraser" size={18} color={theme.grey} />
+                  <Fontisto name="eraser" size={18} color={isDarkMode ? "lightgray":theme.grey} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{checkDone(key)}}>
-                  <Fontisto name={toDos[key].done?"checkbox-active":"checkbox-passive"} size={18} color="gray" />
+                  <Fontisto name={toDos[key].done?"checkbox-active":"checkbox-passive"} size={18} color={isDarkMode ? "lightgray":theme.grey} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => deleteToDo(key)}>
-                  <Fontisto name="trash" size={18} color={theme.grey} />
+                  <Fontisto name="trash" size={18} color={isDarkMode ? "lightgray":theme.grey} />
                 </TouchableOpacity>
               </View>
             </View>
