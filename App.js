@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "./color.js";
 const STORAGE_KEY = "@toDos";
 const WORKING_STORAGE_KEY = "@working";
+const DARK_MODE_KEY = "@darkmode";
 
 export default function App() {
   const [working, setWorking] = useState(true);
@@ -22,6 +23,7 @@ export default function App() {
   const [done, setDone] = useState(false);
   const [editingKey, setEditingKey] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     loadToDos();
   }, []);
@@ -44,7 +46,9 @@ export default function App() {
     saveToDos(newToDos);
   };
   const toggleDarkMode = () => {
-    setIsDarkMode(prev => !prev);
+    const newDarkMode = !isDarkMode;  // 업데이트될 새로운 값
+    setIsDarkMode(newDarkMode); 
+    saveDarkMode(newDarkMode);  // 새로운 값을 저장
   };
 
   const onChangeText = (payload) => setText(payload);
@@ -54,6 +58,13 @@ export default function App() {
       await AsyncStorage.setItem(WORKING_STORAGE_KEY, JSON.stringify(value));
     } catch (error) {
       console.error("Error saving working state:", error);
+    }
+  };
+  const saveDarkMode = async (value) => {
+    try {
+      await AsyncStorage.setItem(DARK_MODE_KEY, JSON.stringify(value));
+    } catch (error) {
+      console.error("Error saving dark mode:", error);
     }
   };
 
@@ -67,14 +78,20 @@ export default function App() {
 
   const loadToDos = async () => {
     try {
-      const s = await AsyncStorage.getItem(STORAGE_KEY);
-      s !== null ? setToDos(JSON.parse(s)) : null;
-      
-      const w = await AsyncStorage.getItem(WORKING_STORAGE_KEY);
-      w !== null ? setWorking(JSON.parse(w)) : null;
+      const [s, w, d] = await Promise.all([
+        AsyncStorage.getItem(STORAGE_KEY),
+        AsyncStorage.getItem(WORKING_STORAGE_KEY),
+        AsyncStorage.getItem(DARK_MODE_KEY)
+      ]);
+  
+      if (s) setToDos(JSON.parse(s));
+      if (w) setWorking(JSON.parse(w));
+      if (d) setIsDarkMode(JSON.parse(d));
+  
     } catch (error) {
       console.error("Error loading data from storage:", error);
     }
+    setIsLoading(false);  // 모든 비동기 작업이 완료된 후에 로딩 상태 업데이트
   };
 
   const addToDo = async () => {
@@ -122,6 +139,9 @@ export default function App() {
     saveToDos(newToDos);
     setEditingKey(null);
   };
+  if (isLoading) {
+    return <Text style={styles.loadingText}>Loading...</Text>;
+  }
   return (
     <View style={[styles.container, { backgroundColor: isDarkMode ? 'black' : 'white' }]}>
       <StatusBar style="auto" />
@@ -153,7 +173,6 @@ export default function App() {
           working ? "What do you have to do?" : "Where do you want to go?"
         }
         style={styles.input}
-        autoFocus={true}
       />
       <ScrollView style={styles.list}>
         {Object.keys(toDos).map((key) =>
@@ -199,7 +218,7 @@ export default function App() {
       </ScrollView>
       <View style={styles.footer}>
         <TouchableOpacity onPress={toggleDarkMode}>
-          <Text style={{color: isDarkMode ? 'white' : 'black'}}>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</Text>
+          <Text style={{color: isDarkMode ? 'white' : 'black'}}>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={deleteAll}>
           <Text style={{color: isDarkMode ? 'white' : 'black'}}>Delete All</Text>
@@ -210,6 +229,12 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  loadingText: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: '50%', // 화면 중앙에 위치하도록 조정
+    color: 'gray',
+  },
   container: {
     flex: 1,
     backgroundColor: theme.bg,
