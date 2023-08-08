@@ -21,6 +21,7 @@ export default function App() {
   const [toDos, setToDos] = useState({});
   const [done, setDone] = useState(false);
   const [editingKey, setEditingKey] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   useEffect(() => {
     loadToDos();
   }, []);
@@ -32,36 +33,48 @@ export default function App() {
     setWorking(true);
     saveWorking(true);
   };
+  const deleteAll = () => {
+    Object.keys(toDos).map((key)=>{
+      if(toDos[key].working === working){
+        
+      }
+    })
+    setToDos({});
+    saveToDos({});
+  };
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
 
   const onChangeText = (payload) => setText(payload);
 
-const saveWorking = async (value) => {
-  try {
-    await AsyncStorage.setItem(WORKING_STORAGE_KEY, JSON.stringify(value));
-  } catch (error) {
-    console.error("Error saving working state:", error);
-  }
-};
+  const saveWorking = async (value) => {
+    try {
+      await AsyncStorage.setItem(WORKING_STORAGE_KEY, JSON.stringify(value));
+    } catch (error) {
+      console.error("Error saving working state:", error);
+    }
+  };
 
-const saveToDos = async (toSave) => {
-  try {
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
-  } catch (error) {
-    console.error("Error saving to-dos:", error);
-  }
-};
+  const saveToDos = async (toSave) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    } catch (error) {
+      console.error("Error saving to-dos:", error);
+    }
+  };
 
-const loadToDos = async () => {
-  try {
-    const s = await AsyncStorage.getItem(STORAGE_KEY);
-    s !== null ? setToDos(JSON.parse(s)) : null;
-    
-    const w = await AsyncStorage.getItem(WORKING_STORAGE_KEY);
-    w !== null ? setWorking(JSON.parse(w)) : null;
-  } catch (error) {
-    console.error("Error loading data from storage:", error);
-  }
-};
+  const loadToDos = async () => {
+    try {
+      const s = await AsyncStorage.getItem(STORAGE_KEY);
+      s !== null ? setToDos(JSON.parse(s)) : null;
+      
+      const w = await AsyncStorage.getItem(WORKING_STORAGE_KEY);
+      w !== null ? setWorking(JSON.parse(w)) : null;
+    } catch (error) {
+      console.error("Error loading data from storage:", error);
+    }
+  };
 
   const addToDo = async () => {
     if (text === "") {
@@ -109,7 +122,7 @@ const loadToDos = async () => {
     setEditingKey(null);
   };
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDarkMode ? 'black' : 'white' }]}>
       <StatusBar style="auto" />
       <View style={styles.header}>
         <TouchableOpacity onPress={work}>
@@ -139,8 +152,9 @@ const loadToDos = async () => {
           working ? "What do you have to do?" : "Where do you want to go?"
         }
         style={styles.input}
+        autoFocus={true}
       />
-      <ScrollView>
+      <ScrollView style={styles.list}>
         {Object.keys(toDos).map((key) =>
           toDos[key].working === working ? (
             <View style={styles.toDo} key={key}>
@@ -181,6 +195,14 @@ const loadToDos = async () => {
           ) : null
         )}
       </ScrollView>
+      <View style={styles.footer}>
+      <TouchableOpacity onPress={deleteAll}>
+        <Text style={{color: isDarkMode ? 'white' : 'black'}}>Delete All</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={toggleDarkMode}>
+        <Text style={{color: isDarkMode ? 'white' : 'black'}}>{isDarkMode ? 'Dark Mode' : 'Light Mode'}</Text>
+      </TouchableOpacity>
+    </View>
     </View>
   );
 }
@@ -208,6 +230,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     fontSize: 18,
   },
+  list: {
+    flex: 1,
+    paddingBottom: 50,
+  },
   toDo: {
     backgroundColor: theme.toDoBg,
     marginBottom: 10,
@@ -228,7 +254,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 16,
     fontWeight:"600",
-    width:"50%",
+    width:"60%",
     padding: 8,
     borderRadius: 5,
     borderWidth: 1,
