@@ -191,22 +191,14 @@ export default function App() {
                   autoFocus={true}
                 />
               ) : (
-                <Text 
-                style={[
-                  styles.toDoText, 
-                  toDos[key].done ? styles.strikeThrough : null,
-                  {color:isDarkMode?'white':'black'}
-                ]}
-              >
-                {toDos[key].text}
-              </Text>
+                <TouchableOpacity onPress={()=>{checkDone(key)}}  style={styles.toDoText}>
+                  <Fontisto name={toDos[key].done?"checkbox-active":"checkbox-passive"} size={18} color={isDarkMode ? "lightgray":theme.grey} />
+                  <Text style={[toDos[key].done ? styles.strikeThrough : null, styles.marginLeft, {color:isDarkMode?'white':'black'}]} >{toDos[key].text}</Text>
+                </TouchableOpacity>
               )}
               <View style={styles.buttons}>
                <TouchableOpacity onPress={() => startEditing(key)}>
                   <Fontisto name="eraser" size={18} color={isDarkMode ? "lightgray":theme.grey} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{checkDone(key)}}>
-                  <Fontisto name={toDos[key].done?"checkbox-active":"checkbox-passive"} size={18} color={isDarkMode ? "lightgray":theme.grey} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => deleteToDo(key)}>
                   <Fontisto name="trash" size={18} color={isDarkMode ? "lightgray":theme.grey} />
@@ -229,6 +221,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  marginLeft:{
+    marginLeft:12,
+  },
   loadingText: {
     fontSize: 20,
     textAlign: 'center',
@@ -265,8 +260,7 @@ const styles = StyleSheet.create({
   },
   toDo: {
     marginBottom: 10,
-    paddingVertical: 16,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     borderRadius: 15,
     flexDirection: "row",
     alignItems: "center",
@@ -276,6 +270,10 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "600",
+    flexDirection:"row",
+    alignItems:"center",
+    width:"85%",
+    height:48,
   },
   toDoTextEdit: {
     backgroundColor: "white",
@@ -292,7 +290,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems:"center",
     justifyContent:"space-between",
-    width:"30%",
+    width:"15%",
   },
   strikeThrough: {
     textDecorationLine: 'line-through',
