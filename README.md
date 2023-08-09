@@ -17,8 +17,10 @@ cd [프로젝트 폴더 이름]
 
 3. 필요한 패키지를 설치합니다.<br>
 npm install
+npx expo install @react-native-async-storage/async-storage
 
-4. Expo를 통해 앱을 실행합니다.<br>
+5. Expo를 통해 앱을 실행합니다.<br>
+npm start 또는 <br>
 npx expo start
 
 
