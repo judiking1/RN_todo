@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "workAndTravel",
-    "slug": "workAndTravel",
+    "name": "workandtravellist",
+    "slug": "workandtravellist",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,23 +19,23 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/adaptive-icon2.png",
+        "backgroundColor": "#000000"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon2.png"
     },
     "extra": {
       "eas": {
-        "projectId": "8f7321b9-a06d-48e4-a5b5-9e3b2cd67d76"
+        "projectId": "28fd973a-ca0a-4d96-bfa8-bcdc1155c42d"
       }
     },
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/8f7321b9-a06d-48e4-a5b5-9e3b2cd67d76"
+      "url": "https://u.expo.dev/28fd973a-ca0a-4d96-bfa8-bcdc1155c42d"
     }
   }
 }
