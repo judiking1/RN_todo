@@ -30,12 +30,13 @@ npx expo start
 - 앱 재실행시, 마지막 상태의 Work 또는 Travel 기억
 - Work/Travel 각 카테고리에서 투두 리스트 전체 삭제
 - 다크모드/화이트모드
+- APK 파일 빌드
 
 
 ## 데모
 - 안드로이드버전. <br>
-- 모바일 링크 : exp://u.expo.dev/update/575d00e7-fd1e-4eab-8890-39e059040ac0<br>
-- 안드로이드 APK : <br>
+- 모바일 안드로이드 버전 링크 : exp://u.expo.dev/update/575d00e7-fd1e-4eab-8890-39e059040ac0<br>
+- QR 코드 : <br>
 
 ![image](https://github.com/judiking1/RN_todo/assets/110409369/b93941a4-8dbd-4633-baa6-8fba7491e46f)
 
