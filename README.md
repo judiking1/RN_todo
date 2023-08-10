@@ -34,9 +34,10 @@ npx expo start
 
 ## 데모
 - 안드로이드버전. <br>
-- 모바일 링크 : exp://u.expo.dev/update/6f41f0f4-700c-47d7-94c8-ac1f5b69b944 <br>
+- 모바일 링크 : exp://u.expo.dev/update/575d00e7-fd1e-4eab-8890-39e059040ac0<br>
 - 안드로이드 APK : <br>
 
-![image](https://github.com/judiking1/RN_todo/assets/110409369/c7eaf523-5a02-4ed6-854a-9173fe3b35f7)
+![image](https://github.com/judiking1/RN_todo/assets/110409369/b93941a4-8dbd-4633-baa6-8fba7491e46f)
+
 
 
